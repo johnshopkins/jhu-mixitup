@@ -4,6 +4,7 @@ module.exports = {
 
   Container: require("./views/ContainerView"),
   Controls: require("./views/ControlsView"),
+  HashState: require("./views/HashStateView"),
   TargetSet: require("./views/TargetSetView"),
 
   controls: {

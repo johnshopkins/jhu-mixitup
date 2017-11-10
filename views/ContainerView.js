@@ -12,6 +12,7 @@ module.exports = Backbone.View.extend({
 
   initialize: function (options) {
 
+    this.state = options.state ? options.state : null;
     this.config = this.setConfig(options);
 
     // parse the targetset
@@ -35,6 +36,10 @@ module.exports = Backbone.View.extend({
       selectors: { target: ".item" }
     };
 
+    if (this.state) {
+      defaults.callbacks = { onMixEnd: this.state.setHash.bind(this.state) };
+    }
+
     return $.extend({}, defaults, options.config || {});
 
   },
@@ -44,6 +49,12 @@ module.exports = Backbone.View.extend({
     // instantiate the mixer
     mixitup.use(mixitupMultifilter);
     this.mixer = mixitup(this.$el, this.config);
+
+    // init the hash state
+    if (this.state) {
+      this.state.mixer = this.mixer;
+      this.state.ready();
+    }
 
     return this;
 

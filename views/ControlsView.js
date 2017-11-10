@@ -15,6 +15,7 @@ module.exports = Backbone.View.extend({
 
     // checkbox display settings
     this.ui = options.ui || "form";
+    this.state = options.state || null;
 
     var data = getScriptData(this.$el);
 
@@ -98,6 +99,7 @@ module.exports = Backbone.View.extend({
 
     var self = this;
     _.each(this.filters, function (filter) {
+      if (self.state) self.state.groups.push(filter.groupName);
       self.$el.append(filter.render().el);
     });
 
