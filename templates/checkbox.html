@@ -1,5 +1,5 @@
 <% if (ui == "button") { %>
-  <button type="button" data-filter=".<%= slug %>">
+  <button type="button" data-toggle=".<%= slug %>">
 <% } else { %>
   <input type="checkbox" value=".<%= slug %>" id="<%= slug %>-<%= uniqueId %>"
     <% if (checked) { %>
