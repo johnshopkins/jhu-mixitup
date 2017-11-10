@@ -1,0 +1,25 @@
+<% if (labelStyle == "button") { %>
+  <button type="button" data-filter=".<%= slug %>">
+<% } else { %>
+  <input type="checkbox" value=".<%= slug %>" id="<%= slug %>-<%= uniqueId %>">
+  <label for="<%= slug %>-<%= uniqueId %>">
+<% } %>
+
+<% if (typeof icon !== "undefined") { %>
+  <i class="fa <%= icon %>" aria-hidden="true"></i>
+<% } %>
+<%= name %>
+
+<% if (labelStyle == "button") { %>
+  </button>
+<% } else { %>
+  </label>
+<% } %>
+
+<% if (parentElement) { %>
+  <button class="toggle-expand">
+    <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+    <span class="icon-fallback">Expand <%= name %></span>
+    <span class="visuallyhidden">Expand <%= name %></span>
+  </button>
+<% } %>
