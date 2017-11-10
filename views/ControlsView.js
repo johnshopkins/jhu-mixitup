@@ -15,8 +15,7 @@ module.exports = Backbone.View.extend({
   initialize: function (options) {
 
     // checkbox display settings
-    this.labelStyle = options.labelStyle || "default";
-    this.tabIndex = options.tabIndex || "default";
+    this.ui = options.ui || "form";
 
     var data = getScriptData(this.$el);
 
@@ -37,13 +36,27 @@ module.exports = Backbone.View.extend({
 
   },
 
+  createCollection: function (options) {
+
+    var self = this;
+
+    var models = $.map(options, function (attributes) {
+      attributes.ui = self.ui;
+      attributes.tabIndex = self.tabIndex;
+      return new Backbone.Model(attributes);
+    });
+
+    return new Backbone.Collection(models);
+
+  },
+
   // create_button: function (data, label) {
   //
   //   // convert each button data to a backbone model
   //   var self = this;
   //   var models = $.map(data.options, function (attributes, id) {
   //     attributes.tabIndex = self.tabIndex.button || "input";
-  //     attributes.labelStyle = self.labelStyle;
+  //     attributes.ui = self.ui;
   //     return new Backbone.Model(attributes);
   //   });
   //
@@ -60,16 +73,8 @@ module.exports = Backbone.View.extend({
   //
   create_checkbox: function (data, label) {
 
-    var self = this;
-
-    var models = $.map(data.options, function (attributes) {
-      attributes.labelStyle = self.labelStyle;
-      attributes.tabIndex = self.tabIndex;
-      return new Backbone.Model(attributes);
-    });
-
     return new Views.checkbox({
-      collection: new Backbone.Collection(models),
+      collection: this.createCollection(data.options),
       label: label
     });
 
@@ -78,7 +83,7 @@ module.exports = Backbone.View.extend({
   // create_search: function (data, label) {
   //
   //   data.tabIndex = this.tabIndex.search || "input";
-  //   data.labelStyle = this.labelStyle;
+  //   data.ui = this.ui;
   //
   //   return new Views.search({
   //     label: label,

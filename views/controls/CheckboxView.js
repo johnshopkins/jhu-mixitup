@@ -8,59 +8,27 @@ var CheckboxView = module.exports = Backbone.View.extend({
 
   template: templates.checkbox,
   className: "filter",
-
-  initialize: function () {
-
-    // // add icon click event
-    // this.events["click .toggle-expand"] = "iconClick";
-    //
-    // if (this.model.get("tabIndex") === "label") {
-    //   this.events["click label button"] = "buttonClick";
-    // }
-
+  events: {
+    "click .toggle-expand": "toggleExpand"
   },
 
-  // iconClick: function (e) {
-  //
-  //   e.preventDefault();
-  //
-  //   this.toggleIcon.toggleClass("fa-minus-square-o fa-plus-square-o");
-  //   this.childFilters.toggleClass("open");
-  //
-  //   var newScreenReaderText;
-  //
-  //   if (this.childFilters.hasClass("open")) {
-  //     this.childFilters.removeAttr("aria-hidden");
-  //     newScreenReaderText = this.screenReaderText.text().replace("Expand", "Collapse");
-  //     this.screenReaderText.text(newScreenReaderText);
-  //   } else {
-  //     this.childFilters.attr("aria-hidden", true);
-  //     newScreenReaderText = this.screenReaderText.text().replace("Collapse", "Expand");
-  //     this.screenReaderText.text(newScreenReaderText);
-  //   }
-  //
-  // },
-  //
-  // /**
-  //  * Essentially the same thing as onChange,
-  //  * but this function reacts to the clicking
-  //  * (or tabbing to and activating) of the label.
-  //  */
-  // buttonClick: function (e) {
-  //
-  //   e.stopPropagation();
-  //
-  //   var checked = this.input.prop("checked");
-  //
-  //   if (checked) {
-  //     this.input.prop("checked", false);
-  //     this.deactivateFilter();
-  //   } else {
-  //     this.input.prop("checked", true);
-  //     this.activateFilter();
-  //   }
-  //
-  // },
+  toggleExpand: function (e) {
+
+    // toggle icon
+    this.toggleIcon.toggleClass("fa-minus-square-o fa-plus-square-o");
+
+    // change icon label
+    var find = open ? "Expand" : "Collapse";
+    var replace = open ? "Collapse" : "Expand";
+
+    var label = this.toggleIcon.attr("aria-label");
+    this.toggleIcon.attr("aria-label", label.replace(find, replace));
+
+    // open child filters
+    this.childFilters.toggleClass("open");
+    this.childFilters.attr("aria-hidden", !this.childFilters.hasClass("open"));
+
+  },
 
   /**
    * Sets the parentElement attribute to true if this
@@ -96,7 +64,6 @@ var CheckboxView = module.exports = Backbone.View.extend({
 
     // save off icon for later toggling
     this.toggleIcon = this.$el.find(".toggle-expand i");
-    this.screenReaderText = this.$el.find(".toggle-expand .visuallyhidden");
 
     // create .child-filters div to store filters in
     this.childFilters = $("<div />")
@@ -112,8 +79,7 @@ var CheckboxView = module.exports = Backbone.View.extend({
     $.each(this.children, function (id, child) {
 
       child.parentElement = false;
-      child.tabIndex = self.model.get("tabIndex");
-      child.labelStyle = self.model.get("labelStyle");
+      child.ui = self.model.get("ui");
 
       var model = new Backbone.Model(child);
 
