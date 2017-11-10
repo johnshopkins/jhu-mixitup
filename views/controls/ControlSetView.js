@@ -13,6 +13,7 @@ module.exports = Backbone.View.extend({
   initialize: function (options) {
 
     this.label = options.label || null;
+    this.groupName = this.label.toLowerCase().replace(" ", "");
 
   },
 
@@ -25,7 +26,7 @@ module.exports = Backbone.View.extend({
 
   render: function () {
 
-    this.$el.attr("data-filter-group", "");
+    this.$el.attr("data-filter-group", this.groupName);
 
     if (this.label) this.$el.append($("<legend />").text(this.label));
 
