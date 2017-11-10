@@ -1,3 +1,5 @@
+/* global module: false */
+
 module.exports = {
 
   Container: require("./views/ContainerView"),

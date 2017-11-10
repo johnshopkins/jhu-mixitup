@@ -1,6 +1,5 @@
 /* global require: false */
 /* global module: false */
-/* global logger: false */
 
 var getScriptData = require("get-script-data");
 

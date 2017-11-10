@@ -1,13 +1,16 @@
 /* global require: false */
 /* global module: false */
-/* global logger: false */
 
 var templates = { checkbox: require("../../templates/checkbox.html") };
 
-var CheckboxView = module.exports = Backbone.View.extend({
+var Views = {
+  Control: require("./ControlView")
+};
+
+var CheckboxView = module.exports = Views.Control.extend({
 
   template: templates.checkbox,
-  className: "filter",
+
   events: {
     "click .toggle-expand": "toggleExpand"
   },
@@ -100,8 +103,7 @@ var CheckboxView = module.exports = Backbone.View.extend({
     this.setParentElementAttr();
     this.setCheckedAttr();
 
-    this.model.set("uniqueId", this.cid);
-    this.$el.append(this.template(this.model.toJSON()));
+    Views.Control.prototype.render.call(this);
 
     if (this.children && this.children.length > 0) {
       this.createChildViews();

@@ -1,6 +1,5 @@
 /* global require: false */
 /* global module: false */
-/* global logger: false */
 
 var mixitup = require("mixitup");
 var mixitupMultifilter = require("mixitup-multifilter");

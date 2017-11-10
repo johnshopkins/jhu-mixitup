@@ -1,6 +1,5 @@
 /* global require: false */
 /* global module: false */
-/* global logger: false */
 
 var templates = { clear: require("../../templates/clear.html") };
 
