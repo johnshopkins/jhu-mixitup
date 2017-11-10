@@ -55,12 +55,6 @@ var CheckboxView = module.exports = Views.Control.extend({
 
   },
 
-  setCheckedAttr: function () {
-
-    this.model.set("checked", false);
-
-  },
-
   createChildViews: function () {
 
     // create child filter views
@@ -101,7 +95,6 @@ var CheckboxView = module.exports = Views.Control.extend({
   render: function () {
 
     this.setParentElementAttr();
-    this.setCheckedAttr();
 
     Views.Control.prototype.render.call(this);
 
