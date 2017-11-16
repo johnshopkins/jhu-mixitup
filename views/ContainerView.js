@@ -32,6 +32,7 @@ module.exports = Backbone.View.extend({
   setupListeners: function () {
 
     this.dispatcher.on("mixitup:set:selector", this.setSelector, this);
+    this.dispatcher.on("mixitup:sort", this.setSort, this);
 
   },
 
@@ -41,6 +42,15 @@ module.exports = Backbone.View.extend({
 
     this.mixer.setFilterGroupSelectors("keyword", selector);
     this.mixer.parseFilterGroups();
+
+  },
+
+  setSort: function (order_by, order) {
+
+    var sort = order_by;
+    if (order) sort += ":" + order;
+
+    this.mixer.sort(sort);
 
   },
 
