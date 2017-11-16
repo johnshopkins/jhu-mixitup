@@ -13,11 +13,10 @@ module.exports = Backbone.View.extend({
 
   initialize: function (options) {
 
-    // checkbox display settings
-    this.ui = options.ui || "form";
     this.dispatcher = options.dispatcher;
     this.state = options.state || null;
-
+    this.ui = options.ui || "form";
+    this.onRender = typeof options.onRender == "function" ? options.onRender : null;
 
   },
 
@@ -89,7 +88,7 @@ module.exports = Backbone.View.extend({
   //
   // },
 
-  render: function (callback) {
+  render: function () {
 
     var self = this;
 
@@ -107,9 +106,7 @@ module.exports = Backbone.View.extend({
 
     });
 
-    if (typeof callback == "function") {
-      callback();
-    }
+    if (this.onRender) this.onRender();
 
     return this;
 
