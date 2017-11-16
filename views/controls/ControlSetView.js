@@ -35,13 +35,21 @@ module.exports = Backbone.View.extend({
 
     if (this.label) this.$el.append($("<legend />").text(this.label));
 
-    // add each element
-    this.collection.each(this.append, this);
+    if (this.collection) {
 
-    // add clear button
-    if (this.clear) {
-      var clear = new Views.Clear();
-      this.$el.append(clear.render().el);
+      // add each element
+      this.collection.each(this.append, this);
+
+      // add clear button
+      if (this.clear) {
+        var clear = new Views.Clear();
+        this.$el.append(clear.render().el);
+      }
+
+    } else if (this.model) {
+
+      this.append(this.model);
+
     }
 
     return this;
