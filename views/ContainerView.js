@@ -12,8 +12,9 @@ module.exports = Backbone.View.extend({
 
   initialize: function (options) {
 
-    this.state = options.state ? options.state : null;
+    this.controls = options.controls;
     this.dispatcher = options.dispatcher;
+    this.state = options.state || null;
     this.config = this.setConfig(options);
 
     // parse the targetset
@@ -46,6 +47,9 @@ module.exports = Backbone.View.extend({
   },
 
   render: function () {
+
+    // render the controls
+    this.controls.render();
 
     // instantiate the mixer
     mixitup.use(mixitupMultifilter);
