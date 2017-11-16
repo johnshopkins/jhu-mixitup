@@ -5,6 +5,12 @@ module.exports = Backbone.View.extend({
 
   className: "filter",
 
+  initialize: function (options) {
+
+    this.dispatcher = options.dispatcher;
+
+  },
+
   render: function () {
 
     this.model.set("uniqueId", this.cid);

@@ -13,6 +13,7 @@ module.exports = Backbone.View.extend({
   initialize: function (options) {
 
     this.state = options.state ? options.state : null;
+    this.dispatcher = options.dispatcher;
     this.config = this.setConfig(options);
 
     // parse the targetset

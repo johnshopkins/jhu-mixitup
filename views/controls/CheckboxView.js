@@ -81,6 +81,7 @@ var CheckboxView = module.exports = Views.Control.extend({
       var model = new Backbone.Model(child);
 
       var view = new CheckboxView({
+        dispatcher: self.dispatcher,
         model: model,
         parent: self
       });

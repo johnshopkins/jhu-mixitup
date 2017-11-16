@@ -12,6 +12,7 @@ module.exports = Backbone.View.extend({
 
   initialize: function (options) {
 
+    this.dispatcher = options.dispatcher;
     this.label = options.label || null;
     this.groupName = this.label.toLowerCase().replace(" ", "");
 
@@ -19,7 +20,11 @@ module.exports = Backbone.View.extend({
 
   append: function (model) {
 
-    var view = new this.view({ model: model });
+    var view = new this.view({
+      dispatcher: this.dispatcher,
+      model: model
+    });
+
     this.$el.append(view.render().el);
 
   },

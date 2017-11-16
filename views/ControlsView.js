@@ -15,6 +15,7 @@ module.exports = Backbone.View.extend({
 
     // checkbox display settings
     this.ui = options.ui || "form";
+    this.dispatcher = options.dispatcher;
     this.state = options.state || null;
 
     var data = getScriptData(this.$el);
@@ -73,10 +74,19 @@ module.exports = Backbone.View.extend({
   //
   create_checkbox: function (data, label) {
 
-    return new Views.checkbox({
-      collection: this.createCollection(data.options),
-      label: label
-    });
+    var options = this.getDefaultOptions(label);
+    options.collection = this.createCollection(data.options);
+
+    return new Views.CheckboxSet(options);
+
+  },
+
+  getDefaultOptions: function (label) {
+
+    return {
+      label: label,
+      dispatcher: this.dispatcher
+    };
 
   },
   //
