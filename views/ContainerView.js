@@ -17,12 +17,27 @@ module.exports = Backbone.View.extend({
     this.state = options.state || null;
     this.config = this.setConfig(options);
 
+    // listen to some events
+    this.setupListeners();
+
     // parse the targetset
     var targets = new Views.TargetSet({
       targets: this.$el.find(this.config.selectors.target),
       models: options.models || {},
       views: options.views || {}
     });
+
+  },
+
+  setupListeners: function () {
+
+    this.dispatcher.on("mixitup:set:selector", this.setSelector, this);
+
+  },
+
+  setSelector: function (group, filter) {
+
+    console.log("setSelector", group, filter);
 
   },
 
