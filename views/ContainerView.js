@@ -37,7 +37,10 @@ module.exports = Backbone.View.extend({
 
   setSelector: function (group, filter) {
 
-    console.log("setSelector", group, filter);
+    var selector = filter ? "." + filter : [];
+
+    this.mixer.setFilterGroupSelectors("keyword", selector);
+    this.mixer.parseFilterGroups();
 
   },
 
