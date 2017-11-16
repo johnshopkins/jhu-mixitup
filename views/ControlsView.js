@@ -18,22 +18,6 @@ module.exports = Backbone.View.extend({
     this.dispatcher = options.dispatcher;
     this.state = options.state || null;
 
-    var data = getScriptData(this.$el);
-
-    var self = this;
-    this.filters = $.map(data, function (data, label) {
-
-      var type = data.type;
-
-      var functionName = "create_" + type;
-
-      if (self[functionName]) {
-        return self[functionName].call(self, data, label);
-      } else {
-        return null;
-      }
-
-    });
 
   },
 
@@ -108,9 +92,19 @@ module.exports = Backbone.View.extend({
   render: function (callback) {
 
     var self = this;
-    _.each(this.filters, function (filter) {
-      if (self.state) self.state.groups.push(filter.groupName);
-      self.$el.append(filter.render().el);
+
+    $.each(getScriptData(this.$el), function (label, data) {
+
+      var type = data.type;
+      var functionName = "create_" + type;
+
+      if (!self[functionName]) return this;
+
+      var view = self[functionName].call(self, data, label);
+
+      if (self.state) self.state.groups.push(view.groupName);
+      self.$el.append(view.render().el);
+
     });
 
     if (typeof callback == "function") {
