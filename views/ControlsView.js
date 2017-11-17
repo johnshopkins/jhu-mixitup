@@ -5,8 +5,8 @@ var getScriptData = require("get-script-data");
 
 var Views = {
   // button: require("./filters/ButtonFilterSet"),
-  checkbox: require("./controls/CheckboxSetView")
-  // search: require("./filters/SearchFilterSet")
+  CheckboxSet: require("./controls/CheckboxSetView")
+  // SearchSet: require("./controls/SearchSetView")
 };
 
 module.exports = Backbone.View.extend({
@@ -72,21 +72,6 @@ module.exports = Backbone.View.extend({
     };
 
   },
-  //
-  // create_search: function (data, label) {
-  //
-  //   data.tabIndex = this.tabIndex.search || "input";
-  //   data.ui = this.ui;
-  //
-  //   return new Views.search({
-  //     label: label,
-  //     model: new Backbone.Model(data),
-  //     vent: this.vent,
-  //     hashFilters: this.hashFilters,
-  //     useHash: this.useHash
-  //   });
-  //
-  // },
 
   render: function () {
 
