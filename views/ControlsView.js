@@ -4,10 +4,8 @@
 var getScriptData = require("get-script-data");
 
 var Views = {
-  // button: require("./filters/ButtonFilterSet"),
   CheckboxSet: require("./controls/CheckboxSetView"),
   ControlsToggle: require("./ControlsToggleView")
-  // SearchSet: require("./controls/SearchSetView")
 };
 
 module.exports = Backbone.View.extend({
@@ -35,27 +33,6 @@ module.exports = Backbone.View.extend({
 
   },
 
-  // create_button: function (data, label) {
-  //
-  //   // convert each button data to a backbone model
-  //   var self = this;
-  //   var models = $.map(data.options, function (attributes, id) {
-  //     attributes.tabIndex = self.tabIndex.button || "input";
-  //     attributes.ui = self.ui;
-  //     return new Backbone.Model(attributes);
-  //   });
-  //
-  //   // create a button view
-  //   return new Views.button({
-  //     label: label,
-  //     collection: new Backbone.Collection(models),
-  //     vent: this.vent,
-  //     hashFilters: this.hashFilters,
-  //     useHash: this.useHash
-  //   });
-  //
-  // },
-  //
   create_checkbox: function (data, label) {
 
     var options = this.getDefaultOptions(label);
