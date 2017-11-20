@@ -5,7 +5,8 @@ var getScriptData = require("get-script-data");
 
 var Views = {
   // button: require("./filters/ButtonFilterSet"),
-  CheckboxSet: require("./controls/CheckboxSetView")
+  CheckboxSet: require("./controls/CheckboxSetView"),
+  ControlsToggle: require("./ControlsToggleView")
   // SearchSet: require("./controls/SearchSetView")
 };
 
@@ -73,10 +74,24 @@ module.exports = Backbone.View.extend({
 
   },
 
-  render: function () {
+  renderToggle: function () {
 
     var self = this;
 
+    var toggle = new Views.ControlsToggle({ dispatcher: this.dispatcher });
+    this.$el.append(toggle.render().el);
+
+    this.listenTo(toggle, "form:display:toggle", function () {
+      self.form.toggleClass("closed");
+    });
+
+  },
+
+  renderForm: function () {
+
+    var self = this;
+
+    // render each item in the form
     $.each(getScriptData(this.$el), function (label, data) {
 
       var type = data.type;
@@ -87,9 +102,24 @@ module.exports = Backbone.View.extend({
       var view = self[functionName].call(self, data, label);
 
       if (self.state) self.state.groups.push(view.groupName);
-      self.$el.append(view.render().el);
+      self.form.append(view.render().el);
 
     });
+
+    // append the form
+    this.$el.append(this.form);
+
+  },
+
+  render: function () {
+
+    var self = this;
+
+    // create the form
+    this.form = $("<form />").addClass("closed");
+
+    this.renderToggle();
+    this.renderForm();
 
     if (this.onRender) this.onRender();
 
