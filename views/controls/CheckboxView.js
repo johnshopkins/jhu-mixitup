@@ -29,7 +29,7 @@ var CheckboxView = module.exports = Views.Control.extend({
 
     // open child filters
     this.childFilters.toggleClass("open");
-    this.childFilters.attr("aria-hidden", !this.childFilters.hasClass("open"));
+    this.childFilters.toggle(this.childFilters.hasClass("open"));
 
   },
 
@@ -65,7 +65,7 @@ var CheckboxView = module.exports = Views.Control.extend({
     // create .child-filters div to store filters in
     this.childFilters = $("<div />")
       .addClass("child-filters")
-      .attr("aria-hidden", true);
+      .toggle(false);
 
     this.$el.append(this.childFilters);
 
