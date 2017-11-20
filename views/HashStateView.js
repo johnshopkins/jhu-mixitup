@@ -3,8 +3,9 @@
 
 module.exports = Backbone.View.extend({
 
-  initialize: function () {
+  initialize: function (options) {
 
+    this.dispatcher = options.dispatcher;
     this.groups = [];
 
   },
@@ -81,6 +82,9 @@ module.exports = Backbone.View.extend({
 
       // get active filters on this group
       var active = self.state[group] || [];
+
+      // hook into when a filter group is filtered
+      self.dispatcher.trigger("filter:init:" + group, active);
 
       // set active filters on the mixer
       self.mixer.setFilterGroupSelectors(group, active.map(self.getSelectorFromValue));
