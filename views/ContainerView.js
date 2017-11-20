@@ -20,6 +20,8 @@ module.exports = Backbone.View.extend({
     // listen to some events
     this.setupListeners();
 
+    this.$el.attr("aria-live", "polite");
+
     // parse the targetset
     var targets = new Views.TargetSet({
       targets: this.$el.find(this.config.selectors.target),
