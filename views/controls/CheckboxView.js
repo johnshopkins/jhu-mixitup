@@ -21,15 +21,16 @@ var CheckboxView = module.exports = Views.Control.extend({
     this.toggleIcon.toggleClass("fa-minus-square-o fa-plus-square-o");
 
     // change icon label
-    var find = open ? "Expand" : "Collapse";
-    var replace = open ? "Collapse" : "Expand";
+    var open = this.childFilters.hasClass("open");
+    var find = open ? "Collapse" : "Expand";
+    var replace = open ? "Expand" : "Collapse";
 
     var label = this.toggleIcon.attr("aria-label");
     this.toggleIcon.attr("aria-label", label.replace(find, replace));
 
     // open child filters
     this.childFilters.toggleClass("open");
-    this.childFilters.toggle(this.childFilters.hasClass("open"));
+    this.childFilters.attr("aria-hidden", !this.childFilters.hasClass("open"));
 
   },
 
@@ -65,7 +66,7 @@ var CheckboxView = module.exports = Views.Control.extend({
     // create .child-filters div to store filters in
     this.childFilters = $("<div />")
       .addClass("child-filters")
-      .toggle(false);
+      .attr("aria-hidden", true);
 
     this.$el.append(this.childFilters);
 
