@@ -5,7 +5,8 @@ var mixitup = require("mixitup");
 var mixitupMultifilter = require("mixitup-multifilter");
 
 var Views = {
-  TargetSet: require("./TargetSetView")
+  TargetSet: require("./TargetSetView"),
+  NoResults: require("./NoResultsView")
 };
 
 module.exports = Backbone.View.extend({
@@ -23,11 +24,14 @@ module.exports = Backbone.View.extend({
     this.$el.attr("aria-live", "polite");
 
     // parse the targetset
-    var targets = new Views.TargetSet({
+    new Views.TargetSet({
       targets: this.$el.find(this.config.selectors.target),
       models: options.models || {},
       views: options.views || {}
     });
+
+    // create a view to show when there are no results
+    this.noresults = new Views.NoResults({ dispatcher: this.dispatcher });
 
   },
 
@@ -63,13 +67,23 @@ module.exports = Backbone.View.extend({
    */
   setConfig: function (options) {
 
+    var self = this;
+
     var defaults = {
       multifilter: { enable: true },
-      selectors: { target: ".item" }
+      selectors: { target: ".item" },
+      callbacks: {
+        onMixStart: function () {
+          self.noresults.hide();
+        },
+        onMixFail: function () {
+          self.noresults.show();
+        }
+      }
     };
 
     if (this.state) {
-      defaults.callbacks = { onMixEnd: this.state.setHash.bind(this.state) };
+      defaults.callbacks.onMixEnd = this.state.setHash.bind(this.state);
     }
 
     return $.extend({}, defaults, options.config || {});
@@ -80,6 +94,9 @@ module.exports = Backbone.View.extend({
 
     // render the controls
     this.controls.render();
+
+    // append no results view
+    this.$el.append(this.noresults.render().el);
 
     // instantiate the mixer
     mixitup.use(mixitupMultifilter);

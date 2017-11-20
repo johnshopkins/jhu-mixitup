@@ -1,7 +1,6 @@
 /* global require: false */
 /* global module: false */
 
-
 var templates = {
   toggle: require("../templates/toggle.html")
 };
