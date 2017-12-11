@@ -5,6 +5,7 @@ var getScriptData = require("get-script-data");
 
 var Views = {
   CheckboxSet: require("./controls/CheckboxSetView"),
+  Clear: require("./controls/ClearView"),
   ControlsToggle: require("./ControlsToggleView")
 };
 
@@ -83,8 +84,12 @@ module.exports = Backbone.View.extend({
 
     });
 
-    // append the form
-    this.$el.append(this.form);
+  },
+
+  renderClearButton: function () {
+
+    var clear = new Views.Clear();
+    this.form.append(clear.render().el);
 
   },
 
@@ -97,6 +102,10 @@ module.exports = Backbone.View.extend({
 
     this.renderToggle();
     this.renderForm();
+    this.renderClearButton();
+
+    // append the form
+    this.$el.append(this.form);
 
     if (this.onRender) this.onRender();
 

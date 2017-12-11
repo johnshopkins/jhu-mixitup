@@ -1,14 +1,9 @@
 /* global require: false */
 /* global module: false */
 
-var Views = {
-  Clear: require("./ClearView")
-};
-
 module.exports = Backbone.View.extend({
 
   tagName: "fieldset",
-  clear: true,
 
   initialize: function (options) {
 
@@ -39,12 +34,6 @@ module.exports = Backbone.View.extend({
 
       // add each element
       this.collection.each(this.append, this);
-
-      // add clear button
-      if (this.clear) {
-        var clear = new Views.Clear();
-        this.$el.append(clear.render().el);
-      }
 
     } else if (this.model) {
 
