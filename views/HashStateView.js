@@ -23,7 +23,11 @@ module.exports = Backbone.View.extend({
    */
   deserializeHash: function () {
 
-    var hash = window.location.hash.replace(/^#!\//g, "");
+    var hash = window.location.hash;
+
+    if (!hash.match(/^#\!/)) return null; // named anchor
+
+    hash = window.location.hash.replace(/^#!\//g, "");
     if (!hash) return null;
 
     var obj = {};
