@@ -38,7 +38,12 @@ module.exports = Backbone.View.extend({
     groups.forEach(function(group) {
       var pair = group.split("=");
       var groupName = pair[0];
-      obj[groupName] = pair[1].split(",");
+      var selected = pair[1];
+
+      if (selected) {
+        obj[groupName] = selected.split(",");
+      }
+
     });
 
     return obj;
