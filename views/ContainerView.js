@@ -15,7 +15,7 @@ module.exports = Backbone.View.extend({
   initialize: function (options) {
 
     if (options.track) {
-      this.analytics = new Analytics('local');
+      this.analytics = new Analytics();
       this.app = options.track;
     }
 
