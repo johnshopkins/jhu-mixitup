@@ -1,6 +1,7 @@
 /* global require: false */
 /* global module: false */
 
+var Analytics = require("analytics");
 var mixitup = require("mixitup");
 var mixitupMultifilter = require("mixitup-multifilter");
 
@@ -12,6 +13,11 @@ var Views = {
 module.exports = Backbone.View.extend({
 
   initialize: function (options) {
+
+    if (options.track) {
+      this.analytics = new Analytics('local');
+      this.app = options.track;
+    }
 
     this.controls = options.controls;
     this.dispatcher = options.dispatcher;
@@ -84,6 +90,16 @@ module.exports = Backbone.View.extend({
 
     if (this.state) {
       defaults.callbacks.onMixEnd = this.state.setHash.bind(this.state);
+    }
+
+    if (this.analytics) {
+      defaults.callbacks.onMixClick = function () {
+        self.analytics.trackEvent({
+          eventCategory: self.app,
+          eventAction: "Click filter",
+          eventLabel: $(this).data('name')
+        });
+      };
     }
 
     return $.extend({}, defaults, options.config || {});

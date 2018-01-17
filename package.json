@@ -4,6 +4,7 @@
   "main": "index.js",
   "description": "The Backbone framework that provides the base for filterable listings.",
   "dependencies": {
+    "analytics": "git+ssh://git@github.com/johnshopkins/analytics.git#v1.0.1",
     "mixitup": "^3.2.1",
     "mixitup-multifilter": "git+ssh://git@github.com/johnshopkins/mixitup-multifilter.git#v3.3.1"
   }

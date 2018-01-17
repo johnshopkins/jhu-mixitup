@@ -1,7 +1,7 @@
 <% if (ui == "button") { %>
-  <button type="button" data-toggle=".<%= slug %>">
+  <button type="button" data-toggle=".<%= slug %>" data-name="<%= name %>">
 <% } else { %>
-  <input type="checkbox" value=".<%= slug %>" id="<%= slug %>-<%= uniqueId %>">
+  <input type="checkbox" value=".<%= slug %>" id="<%= slug %>-<%= uniqueId %>" data-name="<%= name %>">
   <label for="<%= slug %>-<%= uniqueId %>">
 <% } %>
 
