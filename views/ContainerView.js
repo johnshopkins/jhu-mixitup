@@ -43,7 +43,20 @@ module.exports = Backbone.View.extend({
 
   setupListeners: function () {
 
+    /**
+     * Hook to manually set selector filter
+     * Examples:
+     *  - To fitler: this.dispatcher.trigger("mixitup:set:selector", "keyword", ".blah");
+     *  - To reset:  this.dispatcher.trigger("mixitup:set:selector", "keyword", null);
+     */
     this.dispatcher.on("mixitup:set:selector", this.setSelector, this);
+
+    /**
+     * Hook to manually trigger sorting by a order by an order
+     * Examples:
+     *  - To sort:  this.dispatcher.trigger("mixitup:sort", "rel", "asc");
+     *  - To reset: this.dispatcher.trigger("mixitup:sort", "default");
+     */
     this.dispatcher.on("mixitup:sort", this.setSort, this);
 
   },
