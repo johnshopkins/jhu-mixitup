@@ -21,8 +21,13 @@ module.exports = Backbone.View.extend({
 
     this.controls = options.controls;
     this.dispatcher = options.dispatcher;
+    this.itemSelector = options.itemSelector || ".item";
     this.state = options.state || null;
     this.config = this.setConfig(options);
+
+    // keep track of whether more items are loading into the container
+    // helps determine if 'no results' view should show in the meantime
+    this.loadingMore = false;
 
     // listen to some events
     this.setupListeners();
@@ -59,6 +64,11 @@ module.exports = Backbone.View.extend({
      */
     this.dispatcher.on("mixitup:sort", this.setSort, this);
 
+    /**
+     * Replace the current set of items with a new set
+     */
+    this.dispatcher.on("mixitup:replace:all", this.replaceAll, this);
+
   },
 
   setSelector: function (group, filter) {
@@ -94,6 +104,30 @@ module.exports = Backbone.View.extend({
   },
 
   /**
+   * Replace all items in the container with the given items
+   * @param  {array} items Items to add
+   * @return null
+   */
+  replaceAll: function (items) {
+
+    var self = this;
+
+    if (items.length > 0) {
+      // make sure no results view does not display between remove and insert
+      this.loadingMore = true;
+    }
+
+    this.mixer.remove(this.itemSelector, function () {
+      if (items.length > 0) {
+        self.mixer.insert(items, function () {
+          self.loadingMore = false
+        });
+      }
+    });
+
+  },
+
+  /**
    * Merge passed configuration with default configuration
    * @param  {object} options View options
    * @return {object}         Merged configuration
@@ -110,7 +144,9 @@ module.exports = Backbone.View.extend({
           self.noresults.hide();
         },
         onMixFail: function () {
-          self.noresults.show();
+          if (!self.loadingMore) {
+            self.noresults.show();
+          }
         }
       }
     };
