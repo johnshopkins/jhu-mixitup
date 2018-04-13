@@ -72,8 +72,15 @@ module.exports = Backbone.View.extend({
       });
     }
 
-    this.mixer.setFilterGroupSelectors(group, selector);
-    this.mixer.parseFilterGroups();
+    var groupSettings = this.state.groups[group];
+
+    if (groupSettings.mixed) {
+      this.mixer.setFilterGroupSelectors(group, selector);
+      this.mixer.parseFilterGroups();
+    } else {
+      groupSettings.selector = selector;
+      this.state.setHash(); // trigger rehash
+    }
 
   },
 

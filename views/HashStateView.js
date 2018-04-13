@@ -6,7 +6,7 @@ module.exports = Backbone.View.extend({
   initialize: function (options) {
 
     this.dispatcher = options.dispatcher;
-    this.groups = [];
+    this.groups = {};
 
   },
 
@@ -87,7 +87,7 @@ module.exports = Backbone.View.extend({
 
     var self = this;
 
-    $.each(this.groups, function (i, group) {
+    $.each(this.groups, function (group, settings) {
 
       // get active filters on this group
       var active = self.state[group] || [];
@@ -95,8 +95,10 @@ module.exports = Backbone.View.extend({
       // hook into when a filter group is filtered
       self.dispatcher.trigger("filter:init:" + group, active);
 
-      // set active filters on the mixer
-      self.mixer.setFilterGroupSelectors(group, active.map(self.getSelectorFromValue));
+      if (settings.mixed) {
+        // set active filters on the mixer
+        self.mixer.setFilterGroupSelectors(group, active.map(self.getSelectorFromValue));
+      }
 
     });
 
@@ -113,8 +115,11 @@ module.exports = Backbone.View.extend({
     var self = this;
     var states = {};
 
-    $.each(this.groups, function (i, group) {
-      states[group] = self.mixer.getFilterGroupSelectors(group).map(self.getValueFromSelector);
+    $.each(this.groups, function (group, settings) {
+
+      var selectors = settings.mixed ? self.mixer.getFilterGroupSelectors(group) : settings.selector;
+      states[group] = selectors.map(self.getValueFromSelector);
+
     });
 
     return states;
@@ -143,11 +148,11 @@ module.exports = Backbone.View.extend({
   },
 
   getValueFromSelector: function (selector) {
-      return selector.replace(/^./, "");
+    return selector.replace(/^./, "");
   },
 
   getSelectorFromValue: function (value) {
-      return "." + value;
+    return "." + value;
   }
 
 });

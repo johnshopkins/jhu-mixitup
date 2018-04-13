@@ -79,7 +79,11 @@ module.exports = Backbone.View.extend({
 
       var view = self[functionName].call(self, data, label);
 
-      if (self.state) self.state.groups.push(view.groupName);
+      if (self.state) {
+        self.state.groups[view.groupName] = {
+          mixed: view.mixed
+        };
+      }
       self.form.append(view.render().el);
 
     });

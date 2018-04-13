@@ -11,6 +11,9 @@ module.exports = Backbone.View.extend({
     this.label = options.label || null;
     this.groupName = this.label.toLowerCase().replace(" ", "");
 
+    // if true, this filter set is controlled by mixitup. defaults to true
+    this.mixed = typeof options.mixed === "undefined" ? true : options.mixed;
+
   },
 
   append: function (model) {
