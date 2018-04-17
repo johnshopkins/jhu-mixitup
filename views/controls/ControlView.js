@@ -13,7 +13,8 @@ module.exports = Backbone.View.extend({
 
   render: function () {
 
-    this.model.set("uniqueId", this.cid);
+    var id = this.model.get("id");
+    this.model.set("uniqueId", id ? id : this.cid);
     this.$el.append(this.template(this.model.toJSON()));
 
     return this;
