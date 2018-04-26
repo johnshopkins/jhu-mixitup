@@ -1,6 +1,6 @@
 {
   "name": "jhu-mixitup",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "main": "index.js",
   "description": "The Backbone framework that provides the base for filterable listings.",
   "dependencies": {
