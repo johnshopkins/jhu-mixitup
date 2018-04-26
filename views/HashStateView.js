@@ -118,6 +118,12 @@ module.exports = Backbone.View.extend({
     $.each(this.groups, function (group, settings) {
 
       var selectors = settings.mixed ? self.mixer.getFilterGroupSelectors(group) : settings.selector;
+
+      if (!selectors) {
+        // if a group is not controlled by mixitup AND it hasn't been set yet
+        selectors = [];
+      }
+
       states[group] = selectors.map(self.getValueFromSelector);
 
     });
