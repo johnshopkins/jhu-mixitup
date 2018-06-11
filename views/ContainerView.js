@@ -1,7 +1,9 @@
 /* global require: false */
 /* global module: false */
 
+var $ = require("../shims/jquery");
 var Analytics = require("analytics");
+var Backbone = require("../shims/backbone");
 var mixitup = require("mixitup");
 var mixitupMultifilter = require("mixitup-multifilter");
 

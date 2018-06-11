@@ -1,6 +1,9 @@
 /* global require: false */
 /* global module: false */
 
+var $ = require("../../shims/jquery");
+var Backbone = require("../../shims/backbone");
+
 var templates = { clear: require("../../templates/clear.html") };
 
 var CheckboxView = module.exports = Backbone.View.extend({

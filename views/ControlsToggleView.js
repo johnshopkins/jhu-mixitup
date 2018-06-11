@@ -1,6 +1,9 @@
 /* global require: false */
 /* global module: false */
 
+var $ = require("../shims/jquery");
+var Backbone = require("../shims/backbone");
+
 var templates = {
   toggle: require("../templates/toggle.html")
 };
