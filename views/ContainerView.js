@@ -1,9 +1,7 @@
 /* global require: false */
 /* global module: false */
 
-var $ = require("../shims/jquery");
 var Analytics = require("analytics");
-var Backbone = require("../shims/backbone");
 var mixitup = require("mixitup");
 var mixitupMultifilter = require("mixitup-multifilter");
 
@@ -163,6 +161,11 @@ module.exports = Backbone.View.extend({
           eventCategory: self.app,
           eventAction: "Click filter",
           eventLabel: $(this).data('name')
+        });
+        dataLayer.push({
+          'event': 'listingsFilterClick',
+          'appName': self.app,
+          filterName: $(this).data('name')
         });
       };
     }
